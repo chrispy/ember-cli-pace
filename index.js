@@ -19,6 +19,8 @@ var _defaultPaceConfig = {
   restartOnPushState: true,
   restartOnRequestAfter: 500,
   target: 'body',
+  // ember content-for hook where to include pace.js & script-loader.js (head, head-footer, body, body-footer)
+  hookJs: 'head',
   elements: {
     checkInterval: 100,
     selectors: ['body', '.ember-view']
@@ -83,7 +85,7 @@ module.exports = {
   },
 
   contentFor: function (name) {
-    if (_paceConfig && name === 'head') {
+    if (_paceConfig && _paceConfig.hookJs && name === _paceConfig.hookJs) {
       var paceScriptPath = path.join(this.app.bowerDirectory, 'pace', 'pace.js'),
           addonScriptPath = path.resolve(__dirname, 'vendor', 'ember-cli-pace', 'script-loader.js'),
           paceScript, addonScript;
