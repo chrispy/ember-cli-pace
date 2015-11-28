@@ -21,6 +21,8 @@ var _defaultPaceConfig = {
   target: 'body',
   // ember content-for hook where to include pace.js & script-loader.js (head, head-footer, body, body-footer)
   hookJs: 'head',
+  // exclude pace/ember-cli-pace theme.css from app.css
+  excludeThemeCss: false,
   elements: {
     checkInterval: 100,
     selectors: ['body', '.ember-view']
@@ -69,7 +71,7 @@ module.exports = {
   },
 
   treeFor: function (name) {
-    if (_paceConfig && name === 'styles') {
+    if (_paceConfig && !_paceConfig.excludeThemeCss && name === 'styles') {
       var paceThemeName = path.join(_paceConfig.color, 'pace-theme-' + _paceConfig.theme + '.css'),
           originalPaceThemePath = path.join(this.app.bowerDirectory, 'pace', 'themes', paceThemeName),
           addonPaceThemePath = path.join('vendor', 'ember-cli-pace', 'themes', paceThemeName);
